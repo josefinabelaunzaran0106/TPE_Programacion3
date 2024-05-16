@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import TpeGitHub.TPE_Programacion3.Procesador;
-import TpeGitHub.TPE_Programacion3.Tarea;
 
 
 public class CSVReader {
