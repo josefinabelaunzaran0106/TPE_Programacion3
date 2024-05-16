@@ -1,5 +1,7 @@
 package tpe;
 
+import java.util.Hashtable;
+
 import tpe.utils.CSVReader;
 
 /**
@@ -9,29 +11,39 @@ import tpe.utils.CSVReader;
  */
 public class Servicios {
 
+	private Hashtable<String, Tarea> hashtableTareas;
+	private Hashtable<String, Procesador> hashtableProcesadores;
+	
+
 	/*
      * Expresar la complejidad temporal del constructor.
      */
 	public Servicios(String pathProcesadores, String pathTareas)
 	{
 		CSVReader reader = new CSVReader();
-		reader.readProcessors(pathProcesadores);
-		reader.readTasks(pathTareas);
+		this.hashtableTareas = new Hashtable<>();
+		this.hashtableProcesadores = new Hashtable<>();
+		hashtableProcesadores=reader.readProcessors(pathProcesadores);
+		hashtableTareas=reader.readTasks(pathTareas);
 	}
 	
 	/*
      * Expresar la complejidad temporal del servicio 1.
      */
-	public Tarea servicio1(String ID) {	}
+	public Tarea getTarea (String ID) {	
+		if (hashtableTareas.containsKey(ID)){
+			return hashtableTareas.get(ID);
+		}
+		return null;
+	}
     
     /*
      * Expresar la complejidad temporal del servicio 2.
      */
-	public List<Tarea> servicio2(boolean esCritica) {}
+	//public List<Tarea> servicio2(boolean esCritica) {}
 
     /*
      * Expresar la complejidad temporal del servicio 3.
      */
-	public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {}
-
+	//public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {}
 }
