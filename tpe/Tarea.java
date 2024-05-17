@@ -31,13 +31,8 @@ public class Tarea {
     public String toString (){
         return "Id: "+id+", Nombre: "+nombre+", Tiempo : "+tiempo+", EsCritica: "+critica+", Prioridad: "+prioridad;
     }
-
-    /* 
-    @Override
-    public int hashCode (){
-        return Integer.parseInt(id);
-    }
-
+     
+   
     @Override
     public boolean equals(Object t) {
 		try{
@@ -46,7 +41,7 @@ public class Tarea {
 		} catch(Exception e) {
 			return false;
 		}
-	}*/
+	}
 
     
     

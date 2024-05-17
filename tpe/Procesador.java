@@ -1,4 +1,5 @@
 package tpe;
+
 public class Procesador {
     private String id;
     private String codigo;

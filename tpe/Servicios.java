@@ -1,6 +1,9 @@
 package tpe;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
 
 import tpe.utils.CSVReader;
 
@@ -40,10 +43,31 @@ public class Servicios {
     /*
      * Expresar la complejidad temporal del servicio 2.
      */
-	//public List<Tarea> servicio2(boolean esCritica) {}
+	public List<Tarea> isCritic(boolean esCritica) {
+		LinkedList <Tarea> tareasCriticas= new LinkedList<Tarea>();
+		Enumeration tareasKey= hashtableTareas.keys();
+		while(tareasKey.hasMoreElements()){
+			Tarea aux= hashtableTareas.get(tareasKey.nextElement());
+			if(aux.getCritica()== esCritica){
+				tareasCriticas.add(aux);
+			}
+		}
+		return tareasCriticas;
+	}
 
     /*
      * Expresar la complejidad temporal del servicio 3.
      */
-	//public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {}
+
+	public List<Tarea> getTareasPrioridadIn(int prioridadInferior, int prioridadSuperior) {
+		LinkedList <Tarea> tareasPrioridad= new LinkedList<Tarea>();
+		Enumeration tareasKey= hashtableTareas.keys();
+		while(tareasKey.hasMoreElements()){
+			Tarea aux= hashtableTareas.get(tareasKey.nextElement());
+			if(aux.getPrioridad()>prioridadInferior & aux.getPrioridad()<prioridadSuperior){
+				tareasPrioridad.add(aux);
+			}
+		}
+		return tareasPrioridad;
+	}
 }
