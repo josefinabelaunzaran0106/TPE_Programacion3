@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 import tpe.Procesador;
 import tpe.Tarea;
@@ -17,13 +16,12 @@ public class CSVReader {
 	public CSVReader() {
 	}
 	
-	public Hashtable<String, Tarea> readTasks(String taskPath) {
-		
+	public ArrayList<Tarea> readTasks(String taskPath) {
 		// Obtengo una lista con las lineas del archivo
 		// lines.get(0) tiene la primer linea del archivo
 		// lines.get(1) tiene la segunda linea del archivo... y así
 		ArrayList<String[]> lines = this.readContent(taskPath);
-		Hashtable<String, Tarea> auxTareas = new Hashtable<String, Tarea>();
+		ArrayList<Tarea> auxTareas = new ArrayList<Tarea>();
 		
 		for (String[] line: lines) {
 			// Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
@@ -34,20 +32,18 @@ public class CSVReader {
 			Integer prioridad = Integer.parseInt(line[4].trim());
 			// Aca instanciar lo que necesiten en base a los datos leidos
 			Tarea aux = new Tarea(id, nombre, tiempo, critica, prioridad);
-			auxTareas.put(id, aux);
-
+			auxTareas.add(aux);
 		}
-
 		return auxTareas;	
 	}
 	
-public Hashtable<String, Procesador> readProcessors(String processorPath) {
+public ArrayList<Procesador> readProcessors(String processorPath) {
 		
 		// Obtengo una lista con las lineas del archivo
 		// lines.get(0) tiene la primer linea del archivo
 		// lines.get(1) tiene la segunda linea del archivo... y así
 		ArrayList<String[]> lines = this.readContent(processorPath);
-		Hashtable<String, Procesador> auxProcesadores = new Hashtable<String, Procesador>();
+		ArrayList<Procesador> auxProcesadores = new ArrayList<Procesador>();
 		
 		for (String[] line: lines) {
 			// Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
@@ -57,7 +53,7 @@ public Hashtable<String, Procesador> readProcessors(String processorPath) {
 			Integer anio = Integer.parseInt(line[3].trim());
 			// Aca instanciar lo que necesiten en base a los datos leidos
 			Procesador aux = new Procesador(id, codigo, refrigerado, anio);
-			auxProcesadores.put(id, aux);
+			auxProcesadores.add(aux);
 		}
 		return auxProcesadores;
 	}
