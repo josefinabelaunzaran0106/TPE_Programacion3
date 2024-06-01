@@ -29,7 +29,7 @@ public class Tarea {
         return prioridad;
     }
     public String toString (){
-        return "Id: "+id+", Nombre: "+nombre+", Tiempo : "+tiempo+", EsCritica: "+critica+", Prioridad: "+prioridad;
+        return "Id: "+id;
     }
      
    

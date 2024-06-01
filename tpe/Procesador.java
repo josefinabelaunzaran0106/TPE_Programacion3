@@ -8,14 +8,13 @@ public class Procesador {
     private boolean refrigerado;
     private Integer anio;
     private LinkedList <Tarea> tareasAsignadas;
-    private int tMax;
     private int cantCriticas;
     public Procesador(String id, String codigo, boolean refrigerado, Integer anio) {
         this.id = id;
         this.codigo = codigo;
         this.refrigerado = refrigerado;
         this.anio = anio;
-        this.tMax = 0;
+        this.tareasAsignadas= new LinkedList<>();
         this.cantCriticas=0;
     }
     public String getId() {
@@ -30,18 +29,13 @@ public class Procesador {
     public Integer getAnio() {
         return anio;
     }
-    public void incrementarTiempo(int t){
-        tMax=tMax+t;
-    }
-    public void decrementarTiempo(int t){
-        tMax=tMax-t;
-    }
-    public int getTiempo(){
-        return this.getTiempo();
-    }
-    
     public void addTarea(Tarea t){
-        tareasAsignadas.addLast(t);
+        if (t!=null) {
+            tareasAsignadas.add(t);;
+        }
+    }
+    public LinkedList <Tarea> getTareas() {
+        return this.tareasAsignadas;
     }
     // en este metodo no pasamos parametro porque lo que buscamos es que remueva el ultimo elemento de la lista vinculada 
     public void removeTarea(){
@@ -55,6 +49,17 @@ public class Procesador {
     }
     public int getCantCriticas(){
         return this.cantCriticas;
+    }
+    public String toString (){
+        return this.id +" "+ tareasAsignadas;
+    }
+    
+    public Integer getTiempoMax() {
+        int suma = 0;
+        for (Tarea tareaAsignada : tareasAsignadas) {
+            suma=suma+tareaAsignada.getTiempo();
+        }
+        return suma;
     }
 
 }

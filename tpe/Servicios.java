@@ -1,9 +1,8 @@
 package tpe;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.List;
 
 import tpe.utils.CSVReader;
@@ -16,11 +15,12 @@ import tpe.utils.CSVReader;
 public class Servicios {
 
 	private Hashtable<String, Tarea> hashtableTareas;
-	private Hashtable<String, Procesador> hashtableProcesadores;
 	private ArrayList<Tarea> tareas;
 	private ArrayList<Procesador> procesadores;
 	private ArrayList<Tarea> tareasCriticas;
 	private ArrayList<Tarea> tareasNoCriticas;
+	private final int MAX = 2; // cantidad máx de tareas criticas por procesador
+	private Solucion solucionFinal = new Solucion();
 
 	/*
 	 * Expresar la complejidad temporal del constructor.
@@ -32,12 +32,12 @@ public class Servicios {
 		this.tareasNoCriticas = new ArrayList<Tarea>();
 		procesadores = reader.readProcessors(pathProcesadores);
 		tareas = reader.readTasks(pathTareas);
-		
+
 		for (Tarea t : tareas) {
 			hashtableTareas.put(t.getId(), t);
-			if(t.getCritica()==true){
+			if (t.getCritica() == true) {
 				tareasCriticas.add(t);
-			}else{
+			} else {
 				tareasNoCriticas.add(t);
 			}
 
@@ -58,9 +58,9 @@ public class Servicios {
 	 * Expresar la complejidad temporal del servicio 2.
 	 */
 	public List<Tarea> isCritic(boolean esCritica) {
-		if(esCritica==true){
+		if (esCritica == true) {
 			return tareasCriticas;
-		}else{
+		} else {
 			return tareasNoCriticas;
 		}
 	}
@@ -70,7 +70,7 @@ public class Servicios {
 	 */
 
 	public List<Tarea> getTareasPrioridadIn(int prioridadInferior, int prioridadSuperior) {
-		ArrayList <Tarea> aux=new ArrayList<Tarea>();
+		ArrayList<Tarea> aux = new ArrayList<Tarea>();
 		for (Tarea t : tareas) {
 			if (t.getPrioridad() > prioridadInferior & t.getPrioridad() < prioridadSuperior) {
 				aux.add(t);
@@ -79,62 +79,46 @@ public class Servicios {
 		return aux;
 	}
 
-	public Solucion asignarTareasProcesadores(int tiempo) {
-		Solucion parcial= new Solucion();
-		Solucion solucionFinal=new Solucion();
+	public Solucion backtrackingAsignarTareasProcesadores(Integer tiempo) {
+		Solucion estadoInicial = new Solucion();
 		for (Procesador procesador : procesadores) {
-			parcial.addProcesador(procesador);
+			estadoInicial.addProcesador(procesador);
 		}
-		backtrackingAsignarTareasProcesadores(0, parcial, solucionFinal);
-				//System.out.println (asignacionFinal);
-		return solucionFinal;
+		this.backtrackingAsignarTareasProcesadores(0, tiempo, estadoInicial);
+		return this.solucionFinal;
 	}
-	private void backtrackingAsignarTareasProcesadores(int tarea, Solucion parcial, Solucion solucionFinal) {
-		if (tarea==tareas.size()) {
-			if (true) {
-				
-			}
+
+	private void backtrackingAsignarTareasProcesadores(int indiceTarea, Integer tiempo, Solucion parcial) {
+		if (indiceTarea == tareas.size()) {  
+			solucionFinal.copy(parcial);						
 		} else {
-			Enumeration<String> keyProcesadores = hashtableProcesadores.keys();
-			while (keyProcesadores.hasMoreElements()) {
-				Procesador p = hashtableProcesadores.get(keyProcesadores.nextElement());	
-				if(true){
-					//agregar
+			Iterator<Procesador> it = parcial.getProcesadores().iterator();
+			while (it.hasNext()) {
+				Procesador siguiente = it.next();
+				if ((siguiente.getCantCriticas() <= MAX)
+						|| (!siguiente.isRefrigerado() && siguiente.getTiempoMax() < tiempo)) {
+					// agregar
+					siguiente.addTarea(tareas.get(indiceTarea));
 					
-				//if (!((tieneMenosDeDosCriticas(asignacionParcial.get(p.getId())))
-					//&& (!((!p.isRefrigerado()) && tiempoProcesadores.get(p.getId()) < tiempo) ))) {
-					backtrackingAsignarTareasProcesadores(tarea+1,parcial, solucionFinal);
+					if (tareas.get(indiceTarea).getCritica()) {
+						siguiente.incrementarCriticas();
 					}
-					//remover
+					
+					if ((solucionFinal.getTiempoSolucion() == null) ||
+							(parcial.getTiempoSolucion() < solucionFinal.getTiempoSolucion())) {
+						backtrackingAsignarTareasProcesadores(indiceTarea + 1, tiempo, parcial);
+					}
+					
+					// remover
+					if (tareas.get(indiceTarea).getCritica()) {
+						siguiente.decrementarCriticas();
+					}
+					//System.out.println (siguiente);
+					siguiente.removeTarea();
 					
 				}
 			}
 		}
 
-/*
- * public void asignarTareasProcesadores(int x){
- * 
- * 
- * 
- * }
- * private void backtrackingAsignarTareasProcesadores(){
- * /*if (tareas.size()==0){
- * if (actual.getCosto(hashtbable)<solucion.getCosto(hashtable)){
- * solcion = actual;
- * }
- * else{
- * Enumeration keyProcesadores= hashTableProcesadores.key();
- * while (keyProcesadores.hasMoreElements()){
- * Procesador siguiente=
- * hastableProcesadores.get(keyProcesadores.nextElement());
- * if (puedoRecibirTareas(siguiente)){
- * siguiente.addTarea(?)
- * backtrackingAsignarTareasProcesadores()
- * siguiente.removeTarea(?)
- * }
- * }
- * }
- * }
- * }
- */
- }
+	}
+}
