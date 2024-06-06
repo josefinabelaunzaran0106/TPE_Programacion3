@@ -46,7 +46,7 @@ public class Solucion {
         this.procesadores.clear();
     }
     public String toString (){
-        return getTiempoSolucion() +" "+ procesadores;
+        return "Tiempo: [" +getTiempoSolucion()  +"] " + procesadores ;
     }
     public void copy(Solucion parcial){
 
@@ -57,10 +57,8 @@ public class Solucion {
             for (Tarea t : p.getTareas()){
                 Tarea taux = new Tarea(t.getId(), t.getNombre(), t.getTiempo(),t.getCritica(), t.getPrioridad()); 
                 aux.addTarea(taux);   
-            }
-            
+            }   
             this.procesadores.add(aux);
-        }
-        
+        }   
     }
 }

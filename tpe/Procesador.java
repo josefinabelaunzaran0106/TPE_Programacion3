@@ -2,7 +2,7 @@ package tpe;
 
 import java.util.LinkedList;
 
-public class Procesador {
+public class Procesador implements Comparable <Procesador> {
     private String id;
     private String codigo;
     private boolean refrigerado;
@@ -61,5 +61,8 @@ public class Procesador {
         }
         return suma;
     }
+    public int compareTo(Procesador p){
+        return this.getTiempoMax()-p.getTiempoMax();
+    } 
 
 }

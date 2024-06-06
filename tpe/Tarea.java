@@ -1,5 +1,5 @@
 package tpe;
-public class Tarea {
+public class Tarea implements Comparable<Tarea> {
 
     private String id;
     private String nombre;
@@ -29,7 +29,7 @@ public class Tarea {
         return prioridad;
     }
     public String toString (){
-        return "Id: "+id;
+        return "Id: "+ id;
     }
      
    
@@ -41,8 +41,13 @@ public class Tarea {
 		} catch(Exception e) {
 			return false;
 		}
-	}
+	}  
+    public int compareTo(Tarea t){
+        return t.getTiempo()-this.getTiempo();
+    }
+
+}
 
     
     
-}
+
