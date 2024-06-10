@@ -46,17 +46,15 @@ public class Servicios {
 
 		}
 	}
-
 	/*
 	 * La complejidad temporal del servicio 1 es O(1).
 	 */
 	public Tarea getTarea(String ID) {
 		return hashtableTareas.get(ID);
 	}
-
 	/*
 	 * La complejidad temporal del servicio 2 es O(1).
-	 */
+	*/
 	public List<Tarea> isCritic(boolean esCritica) {
 		if (esCritica == true) {
 			return tareasCriticas;
@@ -78,7 +76,6 @@ public class Servicios {
 		}
 		return aux;
 	}
-
 	/*
 	 * La estrategia utilizada es ir generando estados soluciones a partir de
 	 * asignar todas las tareas a los procesadores considerando las restricciones
@@ -113,7 +110,7 @@ public class Servicios {
 			while (it.hasNext()) {
 				Procesador siguiente = it.next();
 				// restricciones del procesador para asignar tareas
-				if ((siguiente.getCantCriticas() <= MAX)
+				if ((siguiente.getCantCriticas() < MAX)
 						|| (!siguiente.isRefrigerado() && siguiente.getTiempoMax() < tiempo)) {
 					// se agrega la tarea al prcesador
 					siguiente.addTarea(tareas.get(indiceTarea));
@@ -196,11 +193,9 @@ public class Servicios {
 			solucion.addProcesador(p);
 		}
 	}
-
 	public int getContadorBacktracking() {
 		return this.contadorBackatracking;
 	}
-
 	public int getContadorGreedy() {
 		return this.contadorGreedy;
 	}

@@ -29,19 +29,14 @@ public class Tarea implements Comparable<Tarea> {
         return prioridad;
     }
     public String toString (){
-        return "Id: "+ id;
-    }
-     
-   
-    @Override
-    public boolean equals(Object t) {
-		try{
-			Tarea v1 = (Tarea)t;
-			return v1.id== id;
-		} catch(Exception e) {
-			return false;
-		}
-	}  
+        return "Id: "+ id + " Nombre: "+ nombre+ " Tiempo: "+ tiempo+ " Critica: " + critica+ " Prioridad: " + prioridad;
+    } 
+    /*
+    //to String simplificado para servivio Backtracking y Greedy
+    public String toString (){
+        return "Id: "+ id; 
+    } 
+    */
     public int compareTo(Tarea t){
         return t.getTiempo()-this.getTiempo();
     }

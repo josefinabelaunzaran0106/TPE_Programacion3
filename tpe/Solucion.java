@@ -37,13 +37,8 @@ public class Solucion {
         aux=procesadores;
         return aux;
     }
-
     public void setProcesadores (LinkedList<Procesador> nueva){
         this.procesadores = nueva;
-    }
-
-    public void clearProcesadores (){
-        this.procesadores.clear();
     }
     public String toString (){
         return "Tiempo: [" +getTiempoSolucion()  +"] " + procesadores ;
