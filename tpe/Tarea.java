@@ -28,15 +28,16 @@ public class Tarea implements Comparable<Tarea> {
     public Integer getPrioridad() {
         return prioridad;
     }
+    /* 
     public String toString (){
         return "Id: "+ id + " Nombre: "+ nombre+ " Tiempo: "+ tiempo+ " Critica: " + critica+ " Prioridad: " + prioridad;
     } 
-    /*
+    */
     //to String simplificado para servivio Backtracking y Greedy
     public String toString (){
         return "Id: "+ id; 
     } 
-    */
+    
     public int compareTo(Tarea t){
         return t.getTiempo()-this.getTiempo();
     }
